@@ -3,6 +3,8 @@ package com.mmall.dao;
 import com.mmall.pojo.Order;
 import com.mmall.pojo.OrderExample;
 import java.util.List;
+
+import com.mmall.pojo.OrderItem;
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderMapper {
@@ -19,4 +21,12 @@ public interface OrderMapper {
     int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
 
     int updateByExample(@Param("record") Order record, @Param("example") OrderExample example);
+
+    Order selectByUseridAndOrderno(@Param("orderNo")Long orderNo,@Param("userId")Integer userId);
+
+    Order selectByOrderno(Long orderNo);
+
+    List<Order> selectByUserid(Integer userId);
+
+    List<Order> getAllOrder();
 }

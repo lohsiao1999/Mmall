@@ -19,4 +19,8 @@ public interface ShoppingMapper {
     int updateByExampleSelective(@Param("record") Shopping record, @Param("example") ShoppingExample example);
 
     int updateByExample(@Param("record") Shopping record, @Param("example") ShoppingExample example);
+
+    int deleteByUseridAndShoppingId(@Param("userId")Integer userId,@Param("shoppingId")Integer shoppingId);
+
+    Shopping selectByUseridAndShoppingid(@Param("userId")Integer userId,@Param("shoppingId")Integer shoppingId);
 }

@@ -19,4 +19,20 @@ public interface CartMapper {
     int updateByExampleSelective(@Param("record") Cart record, @Param("example") CartExample example);
 
     int updateByExample(@Param("record") Cart record, @Param("example") CartExample example);
+
+    Cart getCartById(@Param("userId")Integer userId,@Param("productId")Integer productId);
+
+    List<Cart> selectCartById(Integer userId);
+
+    int selectCartProductCheckedStatus(Integer userId);
+
+    int deleteProduct(@Param("userId")Integer userId,@Param("productids")List<String> productids);
+
+    int checkedOrUncheckedAll(@Param("userId")Integer userId,@Param("checked")Integer checked,
+                              @Param("productId")Integer productId);
+
+    int getProductCount(Integer userId);
+
+    List<Cart> selectCheckedCarByUserId(Integer userId);
+
 }

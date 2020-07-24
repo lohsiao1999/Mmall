@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+<configuration> 
+
+
+<settings>
+	<setting name="mapUnderscoreToCamelCase" value="true"/>
+	<setting name="jdbcTypeForNull" value="NULL"/>
+	
+	<!-- 开启延迟加载，在需要时才调用分布查询 -->
+	<setting name="lazyLoadingEnabled" value="true"/>
+	<setting name="aggressiveLazyLoading" value="false"/>
+	<setting name="cacheEnabled" value="true"/>
+</settings>
+
+<!-- <typeAliases></typeAliases>标签为java类起别名，别名不区分大小写 
+	 尽量使用全类名，方便查询代码
+ <typeAliases>
+	默认别名为类名小写，此处为user；可以通过 alias 属性指定一个别名
+	<typeAlias type="com.lx.mybatis02.User" alias="emp"/>
+	通过<package/>标签为一个包中的所有类起别名，在使用该标签时可以通过@Alias注解为某个具体的类指定一个别名
+	<package name="com.lx.mybatis02"/>
+</typeAliases> -->
+
+
+<!-- databaseIdProvider：支持不同数据源的sql
+     type="DB_VENDOR" VendorDatabaseIdProvider类别名
+             作用：得到数据厂商的标识（getDatabaseProductName()方法），根据不同标识执行不同的语句
+<databaseIdProvider type="DB_VENDOR">
+    value：为数据源起别名 
+	<property name="Mysql" value="mysql"/>
+</databaseIdProvider> -->
+ 
+</configuration>

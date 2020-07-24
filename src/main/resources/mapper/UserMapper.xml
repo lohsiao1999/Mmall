@@ -231,4 +231,57 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+  <select id="checkUserName" resultType="int" parameterType="string">
+    select count(1) from mmall_user
+    where username=#{username}
+  </select>
+
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_user
+    where username=#{username} and password=#{password}
+  </select>
+
+  <select id="checkEmail" resultType="int" parameterType="string">
+    select count(1) from mmall_user
+    where email=#{email}
+  </select>
+
+  <select id="getQuestion" resultType="string">
+    select question
+    from mmall_user
+    where username = #{username};
+  </select>
+
+  <select id="checkAnswer" resultType="int">
+    select count(1)
+    from mmall_user
+    where username = #{username} and question = #{question} and answer =#{answer}
+  </select>
+
+  <update id="resetPassword">
+    update mmall_user
+    set password=#{password},update_time=now()
+    where username=#{username}
+  </update>
+
+  <select id="checkPassword" resultType="int">
+    select count(1)
+    from mmall_user
+    where password=#{password} and id=#{userid}
+  </select>
+
+  <select id="checkEmailByUserid" resultType="int">
+    select count(1)
+    from mmall_user
+    where email=#{email} and id=#{userid}
+  </select>
+
+  <select id="getInfoById" resultMap="BaseResultMap">
+    select username,email,phone,question,answer
+    from mmall_user
+    where id=#{userid}
+  </select>
 </mapper>

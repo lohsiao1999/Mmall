@@ -6,9 +6,12 @@
        xmlns:mybatis="http://mybatis.org/schema/mybatis-spring" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:component-scan base-package="com.mmall"/>
-    <context:property-placeholder location="db.properties"/>
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+    <context:component-scan base-package="com.mmall">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <bean id="mydataSource" class="org.apache.commons.dbcp2.BasicDataSource"
      p:driverClassName="${jdbc.driverclass}"
      p:url="${jdbc.url}"
      p:username="${jdbc.user}"
@@ -21,29 +24,39 @@
      p:minEvictableIdleTimeMillis="${jdbc.minEvictableIdleTimeMillis}">
     </bean>
 
-    <bean class="org.mybatis.spring.SqlSessionFactoryBean"
-    p:dataSource-ref="dataSource"
-    p:mapperLocations="classpath:mapper/*.xml">
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="2"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:db.properties</value>
+            </list>
+        </property>
+        <property name="fileEncoding" value="utf-8"/>
+    </bean>
+
+
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="mydataSource"/>
+        <property name="configLocation" value="classpath:mybatis_config.xml"/>
+        <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml"/>
         <!--引入分页插件-->
         <property name="plugins">
             <array>
-                <bean class="com.github.pagehelper.PageInterceptor">
-                    <property name="properties">
-                        <value>
-                            dialect=mysql
-                        </value>
-                    </property>
-                </bean>
+                <bean class="com.github.pagehelper.PageInterceptor"></bean>
             </array>
         </property>
     </bean>
     <!--扫描dao包-->
-    <mybatis:scan base-package="com.mmall.dao"/>
+   <mybatis:scan base-package="com.mmall.dao"/>
 
     <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-    p:dataSource-ref="dataSource"
+    p:dataSource-ref="mydataSource"
     p:rollbackOnCommitFailure="true"></bean>
 
-    <tx:annotation-driven transaction-manager="dataSourceTransactionManager" proxy-target-class="true"/>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
 
 </beans>

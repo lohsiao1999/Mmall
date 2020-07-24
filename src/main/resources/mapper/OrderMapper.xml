@@ -100,15 +100,15 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.mmall.pojo.Order">
-    insert into mmall_order (id, order_no, user_id, 
-      shopping_id, payment, payment_type, 
-      postage, status, payment_time, 
-      send_time, end_time, close_time, 
+    insert into mmall_order (id, order_no, user_id,
+      shopping_id, payment, payment_type,
+      postage, status, payment_time,
+      send_time, end_time, close_time,
       create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, 
-      #{shoppingId,jdbcType=INTEGER}, #{payment,jdbcType=DECIMAL}, #{paymentType,jdbcType=INTEGER}, 
-      #{postage,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{paymentTime,jdbcType=TIMESTAMP}, 
-      #{sendTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER},
+      #{shoppingId,jdbcType=INTEGER}, #{payment,jdbcType=DECIMAL}, #{paymentType,jdbcType=INTEGER},
+      #{postage,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{paymentTime,jdbcType=TIMESTAMP},
+      #{sendTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP},
       now(), now())
   </insert>
   <insert id="insertSelective" parameterType="com.mmall.pojo.Order">
@@ -150,12 +150,8 @@
       <if test="closeTime != null">
         close_time,
       </if>
-      <if test="createTime != null">
         create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
+        update_time
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -194,12 +190,8 @@
       <if test="closeTime != null">
         #{closeTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createTime != null">
         now(),
-      </if>
-      <if test="updateTime != null">
-        now(),
-      </if>
+        now()
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.mmall.pojo.OrderExample" resultType="java.lang.Long">
@@ -250,9 +242,7 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateTime != null">
-        update_time = now(),
-      </if>
+        update_time = now()
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -278,4 +268,34 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+  <select id="selectByUseridAndOrderno" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_order
+    where order_no = #{orderNo} and user_id = #{userId}
+  </select>
+
+  <select id="selectByOrderno" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_order
+    where order_no = #{orderNo}
+  </select>
+
+  <select id="selectByUserid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_order
+    where user_id = #{userId}
+    order by create_time desc
+  </select>
+
+  <select id="getAllOrder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_order
+    order by create_time desc
+  </select>
+
 </mapper>

@@ -230,9 +230,7 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateTime != null">
-        update_time = now(),
-      </if>
+        update_time = now()
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -256,4 +254,46 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <select id="selectByID" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_product where id = #{id}
+  </select>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_product
+    order by id asc
+  </select>
+
+  <select id="searchByIdOrName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_product
+    <where>
+      <if test="productid!=null">
+        id = #{productid}
+      </if>
+      <if test="productname!=null">
+        and name like #{productname}
+      </if>
+    </where>
+  </select>
+  <select id="searchByCategoryidOrName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_product
+    <where>
+      <if test="productname!=null">
+        name like #{productname}
+      </if>
+      <if test="categoryids!=null">
+        and category in
+        <foreach collection="categoryids" item="item" index="index" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </select>
 </mapper>

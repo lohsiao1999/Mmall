@@ -19,4 +19,12 @@ public interface ProductMapper {
     int updateByExampleSelective(@Param("record") Product record, @Param("example") ProductExample example);
 
     int updateByExample(@Param("record") Product record, @Param("example") ProductExample example);
+
+    Product selectByID(Integer id);
+
+    List<Product> getAll();
+
+    List<Product> searchByIdOrName(@Param("productname") String productname,@Param("productid")Integer productid);
+
+    List<Product> searchByCategoryidOrName(@Param("productname") String productname,@Param("categoryids")List<Integer> categoryids);
 }

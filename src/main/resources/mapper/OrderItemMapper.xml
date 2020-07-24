@@ -243,4 +243,26 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+  <select id="getOrderItemList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_order_item
+    where order_no = #{orderNo}
+    <if test="userId != null">
+      and user_id = #{userId}
+    </if>
+  </select>
+
+  <insert id="insertOrderItem">
+    insert into mmall_order_item ( user_id, order_no,
+      product_id, product_name, product_image,
+      current_unit_price, quantity, total_price,
+      create_time, update_time)
+    values
+    <foreach collection="orderItemList" index="index" item="item" separator=",">
+      (#{item.userId},#{item.orderNo},#{item.productId},#{item.productName},#{item.productImage},
+      #{item.currentUnitPrice},#{item.quantity},#{item.totalPrice},now(),now())
+    </foreach>
+  </insert>
 </mapper>

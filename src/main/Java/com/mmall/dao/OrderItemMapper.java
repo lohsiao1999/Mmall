@@ -19,4 +19,8 @@ public interface OrderItemMapper {
     int updateByExampleSelective(@Param("record") OrderItem record, @Param("example") OrderItemExample example);
 
     int updateByExample(@Param("record") OrderItem record, @Param("example") OrderItemExample example);
+
+    List<OrderItem> getOrderItemList(@Param("orderNo")Long orderNo,@Param("userId")Integer userId);
+
+    void insertOrderItem (@Param("orderItemList")List<OrderItem> orderItemList);
 }
