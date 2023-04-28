@@ -40,7 +40,7 @@ public class GetlengthOfLIS {
             tail[left] = num;
             //此处有两种情况
             //1.tail数组不存在元素时，right==res，直接当当前元素加入tail数组
-            //2。tail数组的原损都小于当前元素，当前元素加入tail数组，res长度加1
+            //2。tail数组的元素都小于当前元素，当前元素加入tail数组，res长度加1
             if(right == res) res++;
         }
         return res;
