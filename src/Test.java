@@ -4,28 +4,47 @@ public class Test {
 
 
         public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            String a = "78";
-            String b = "ux";
-            Map<Integer, List<String>> map = initMap();
-            List<String> result = new ArrayList<>();
-            result.addAll(map.get(Integer.valueOf(a.charAt(0) - '0')));
-            int size = result.size();
-            for(int k=0;k<size;k++){
-                String str = result.get(k);
-                for(int i = 1; i < a.length(); i++){
-                    List<String> temp = map.get(Integer.valueOf(a.charAt(i) - '0'));
-                    for(int j = 0; j < temp.size(); j++){
-                        String s = str + temp.get(j);
-                        result.add(s);
-                    }
-                }
+            int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
+            int res=0,pre=0,cur=0;
+            for(int num:nums){
+                cur = num;
+                //若pre<=0，取状态转移方程2，否则取1
+                cur += Math.max(pre, 0);
+                res = Math.max(res, cur);
+                pre = cur;
             }
-            for(String str:result){
-                if(str.length() == a.length() && !str.contains(b)){
-                    System.out.print(str+",");
-                }
-            }
+            System.out.println(res);
+//            int[] prices = {7,1,5,3,6,4};
+//            int n = prices.length;
+//            int[] dp = new int[n+1];
+//            for(int i=1;i<=n;i++){
+//                for(int j=i;j>0;j--){
+//                    dp[i] = Math.max(dp[i],prices[i-1]-prices[j-1]+dp[j-1]);
+//                }
+//            }
+//            System.out.println(Arrays.toString(dp));
+//            Scanner sc = new Scanner(System.in);
+//            String a = "78";
+//            String b = "ux";
+//            Map<Integer, List<String>> map = initMap();
+//            List<String> result = new ArrayList<>();
+//            result.addAll(map.get(Integer.valueOf(a.charAt(0) - '0')));
+//            int size = result.size();
+//            for(int k=0;k<size;k++){
+//                String str = result.get(k);
+//                for(int i = 1; i < a.length(); i++){
+//                    List<String> temp = map.get(Integer.valueOf(a.charAt(i) - '0'));
+//                    for(int j = 0; j < temp.size(); j++){
+//                        String s = str + temp.get(j);
+//                        result.add(s);
+//                    }
+//                }
+//            }
+//            for(String str:result){
+//                if(str.length() == a.length() && !str.contains(b)){
+//                    System.out.print(str+",");
+//                }
+//            }
         }
 
         public static Map<Integer,List<String>> initMap(){

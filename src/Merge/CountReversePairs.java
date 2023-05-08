@@ -14,9 +14,10 @@ import java.util.Arrays;
 public class CountReversePairs {
 
     public static void main(String[] args) {
-        int[] nums = {7,5,6,4,1,111};
-        System.out.println(reversePairs(nums));
+        //int[] nums = {7,5,6,4,1,111};
+//        System.out.println(reversePairs(nums));
 
+        int[] nums = {4,2,3};
         temp = new int[nums.length];
         mergeSort1(nums,0, nums.length-1);
         System.out.println(Arrays.toString(nums));
@@ -80,13 +81,15 @@ public class CountReversePairs {
         //合并，i指向左子数组的起始位置；j指向右子数组的起始位置
         int i=left,j = mid+1;
         for (int k = left;k<=right;k++){
-            if(i == mid+1 || temp[i] > temp[j]){
+            if(j<=right && (i == mid+1 || temp[i] > temp[j])){
+                //需要先判断j索引是否已经越过right
                 //i == mid+1 意味着左子数组已经合并完成，
                 //temp[i] > temp[j] 表示在左子数组中 i指向的值 > 右子数组中 j指向的值
                 //以上两种情况都需要合并右子数组
                 nums[k] = temp[j++];
-            }else if(j == right+1 || temp[i] <= temp[j]){
-                /* j == right+1 意味着右子数组已经合并完成；
+            }else if(i<=mid && (j == right+1 || temp[i] <= temp[j])){
+                /* 需要先判断i索引是否已经越过mid
+                 * j == right+1 意味着右子数组已经合并完成；
                  *  temp[i] <= temp[j]表示在左子数组中 i指向的值 <= 右子数组中 j指向的值
                  * 以上两种情况都需要合并左子数组
                  */
