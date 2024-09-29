@@ -8,6 +8,7 @@ public class GetMaxSumTwoNoOverlap {
         System.out.println(maxSumTwoNoOverlap(nums,1,2));
     }
 
+    //使用前缀和，从前往后遍历
     public static int maxSumTwoNoOverlap(int[] nums, int firstLen, int secondLen) {
         int n = nums.length;
         int[] sums = new int[n+1];
@@ -24,7 +25,7 @@ public class GetMaxSumTwoNoOverlap {
             //sumB和sumA最大的区别在于，在nums数组中，sumA计算长度为firstLen的子数组在长度为secondLen的子数组左边时的最大和
             //sumB计算长度为secondLen的子数组在长度为firstLen的子数组左边时的最大和
             sumB = Math.max(sumB,sums[i-firstLen] - sums[i-firstLen-secondLen]);
-            res = Math.max(res,Math.max(sumA+sums[i]-sums[i-secondLen],sumB+sums[i]-sums[i-firstLen]));
+            res = Math.max(res,Math.max(sumA+(sums[i]-sums[i-secondLen]),sumB+sums[i]-sums[i-firstLen]));
         }
         return res;
     }

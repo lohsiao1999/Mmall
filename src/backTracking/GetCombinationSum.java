@@ -31,7 +31,8 @@ public class GetCombinationSum {
         }
         for(int i=start;i<candidates.length;i++){
             int n = candidates[i];
-            if (target - n < 0) break;
+            //如果下一个数取值已经大于target，不再递归
+            if (target - n < 0) continue;
             tmp.add(n);
             dfs(tmp,candidates,target-n,i);
             tmp.remove(tmp.size()-1);

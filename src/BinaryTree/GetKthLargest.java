@@ -21,6 +21,10 @@ public class GetKthLargest {
         return res;
     }
 
+    /**
+     * 二叉搜索树，中序遍历为单调递增
+     * 因此使用倒序的中序遍历，此时为单调递减，可轻松找出第K大的数据
+     */
     public void dfs(TreeNode node){
         if(node == null) return;
         dfs(node.right);

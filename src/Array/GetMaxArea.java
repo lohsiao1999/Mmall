@@ -1,6 +1,7 @@
 package Array;
 /*
-* 盛水最多的容器
+* 盛水最多的容器 https://leetcode.cn/problems/container-with-most-water/description/
+* 双指针，从头尾开始向中间遍历并获取最大值
  */
 public class GetMaxArea {
 
